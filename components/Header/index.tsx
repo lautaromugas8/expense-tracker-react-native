@@ -35,8 +35,18 @@ export function Header() {
     <View style={styles.container}>
       <Balance />
       <View style={styles.summaryCardContainer}>
-        <SummaryCard title="Income" amount={`$${income}`} />
-        <SummaryCard title="Expense" amount={`$${expenses}`} />
+        <SummaryCard
+          title="Income"
+          amount={`$${income}`}
+          name="trending-up"
+          color="green"
+        />
+        <SummaryCard
+          title="Expense"
+          amount={`$${expenses}`}
+          name="trending-down"
+          color="red"
+        />
       </View>
     </View>
   );

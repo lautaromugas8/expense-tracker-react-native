@@ -8,8 +8,8 @@ export default function App() {
   return (
     <GlobalProvider>
       <View style={styles.container}>
-        <Header />
         <StatusBar style="auto" />
+        <Header />
       </View>
     </GlobalProvider>
   );
@@ -19,7 +19,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "black",
-    alignItems: "center",
-    justifyContent: "center",
   },
 });

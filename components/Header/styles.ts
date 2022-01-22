@@ -2,11 +2,15 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
+    display: "flex",
     backgroundColor: "yellow",
+    paddingTop: 50,
+    paddingBottom: 20,
   },
   summaryCardContainer: {
-    width: "100%",
     flexDirection: "row",
     justifyContent: "space-between",
+    paddingHorizontal: 16,
+    flexWrap: "wrap",
   },
 });

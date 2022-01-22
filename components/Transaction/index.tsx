@@ -1,10 +1,10 @@
 import { View, Text } from "react-native";
 import { styles } from "./styles";
 
-export default function AddTransaction() {
+export function Transaction() {
   return (
     <View>
-      <Text>AddTransaction</Text>
+      <Text>Transaction</Text>
     </View>
   );
 }
