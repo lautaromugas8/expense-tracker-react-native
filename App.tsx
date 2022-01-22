@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
-import { Balance } from "./components/Balance";
+import { Header } from "./components/Header";
 
 import { GlobalProvider } from "./context/GlobalState";
 
@@ -8,7 +8,7 @@ export default function App() {
   return (
     <GlobalProvider>
       <View style={styles.container}>
-        <Balance />
+        <Header />
         <StatusBar style="auto" />
       </View>
     </GlobalProvider>
@@ -18,7 +18,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "black",
     alignItems: "center",
     justifyContent: "center",
   },

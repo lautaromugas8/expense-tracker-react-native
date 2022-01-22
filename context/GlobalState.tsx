@@ -3,6 +3,7 @@ import React, { createContext, useState, useContext } from "react";
 type Transaction = {
   id: number;
   text: string;
+  description: string;
   amount: number;
 };
 
@@ -13,7 +14,21 @@ export interface GlobalContextInterface {
 }
 
 const initialState: GlobalContextInterface = {
-  transactions: [],
+  transactions: [
+    {
+      id: 1,
+      text: "Restaurant",
+      description: "Today's date was awesome",
+      amount: -1000,
+    },
+    {
+      id: 2,
+      text: "Coffee",
+      description: "Invited everyone to have coffee today",
+      amount: -133,
+    },
+    { id: 3, text: "Transfer", description: "Cash to Card", amount: 15000 },
+  ],
 };
 
 export const GlobalContext =
@@ -32,6 +47,7 @@ export const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
       transactions: [...prevState.transactions, transaction],
     }));
   };
+
   const deleteTransaction = (id: number) => {
     setState((prevState) => ({
       ...prevState,
