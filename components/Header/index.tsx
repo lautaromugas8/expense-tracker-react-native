@@ -26,7 +26,7 @@ export function Header() {
     maximumFractionDigits: 2,
   });
 
-  const expenses = totalExpenses.toLocaleString(undefined, {
+  const expenses = Math.abs(totalExpenses).toLocaleString(undefined, {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
@@ -43,7 +43,7 @@ export function Header() {
         />
         <SummaryCard
           title="Expense"
-          amount={`$${expenses}`}
+          amount={`-$${expenses}`}
           name="trending-down"
           color="red"
         />
