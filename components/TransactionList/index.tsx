@@ -20,6 +20,7 @@ export function TransactionList() {
               text={item.text}
               description={item.description}
               amount={item.amount}
+              id={item.id}
             />
           )}
         />

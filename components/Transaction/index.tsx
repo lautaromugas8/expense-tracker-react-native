@@ -1,31 +1,49 @@
-import { View, Text } from "react-native";
+import { View, Text, Pressable, Alert } from "react-native";
+import { useTransactions } from "../../context/GlobalState";
 import { styles } from "./styles";
 
 type Props = {
   text: string;
   description: string;
   amount: number;
+  id: number;
 };
 
-export function Transaction({ text, description, amount }: Props) {
+export function Transaction({ text, description, amount, id }: Props) {
+  const { deleteTransaction } = useTransactions();
+
   return (
-    <View style={styles.container}>
-      <View>
-        <Text style={styles.text}>{text}</Text>
-        <Text style={styles.description}>{description}</Text>
-      </View>
-      <View>
-        <Text
-          style={[
-            styles.amount,
-            {
-              color: amount < 0 ? "red" : "green",
+    <Pressable
+      onPress={() =>
+        Alert.alert("Delete this transaction?", undefined, [
+          {
+            text: "Yes",
+            onPress: () => {
+              if (deleteTransaction) deleteTransaction(id);
             },
-          ]}
-        >
-          {amount < 0 ? `-$${Math.abs(amount)}` : `$${amount}`}
-        </Text>
+          },
+          { text: "No", style: "cancel" },
+        ])
+      }
+    >
+      <View style={styles.container}>
+        <View>
+          <Text style={styles.text}>{text}</Text>
+          <Text style={styles.description}>{description}</Text>
+        </View>
+        <View>
+          <Text
+            style={[
+              styles.amount,
+              {
+                color: amount < 0 ? "red" : "green",
+              },
+            ]}
+          >
+            {amount < 0 ? `-$${Math.abs(amount)}` : `$${amount}`}
+          </Text>
+        </View>
       </View>
-    </View>
+    </Pressable>
   );
 }
