@@ -1,9 +1,10 @@
 import { StyleSheet } from "react-native";
+import Util from "../../utils";
 
 export const styles = StyleSheet.create({
   container: {
     display: "flex",
-    backgroundColor: "yellow",
+    backgroundColor: Util.colors.yellow,
     paddingTop: 50,
     paddingBottom: 20,
   },

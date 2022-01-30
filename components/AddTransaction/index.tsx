@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { TransactionType, useTransactions } from "../../context/GlobalState";
+import Util from "../../utils";
 import { styles } from "./styles";
 
 export function AddTransaction() {
@@ -78,12 +79,12 @@ export function AddTransaction() {
               }
               placeholder="Negative values for expenses"
             />
-            <View style={styles.buttons}>
-              <Pressable onPress={onAdd}>
-                <Text>Add</Text>
+            <View style={styles.buttonContainer}>
+              <Pressable onPress={onAdd} style={styles.buttons}>
+                <Text style={styles.buttonText}>Add</Text>
               </Pressable>
-              <Pressable onPress={onClose}>
-                <Text>Close</Text>
+              <Pressable onPress={onClose} style={styles.buttons}>
+                <Text style={styles.buttonText}>Close</Text>
               </Pressable>
             </View>
           </View>
@@ -92,11 +93,12 @@ export function AddTransaction() {
       <Pressable
         onPress={() => setModalVisible(!modalVisible)}
         disabled={modalVisible}
+        style={styles.icon}
       >
         <AntDesign
           name="pluscircle"
-          size={48}
-          color={modalVisible ? "gray" : "black"}
+          size={60}
+          color={modalVisible ? "gray" : Util.colors.yellow}
         />
       </Pressable>
     </View>

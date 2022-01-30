@@ -1,8 +1,9 @@
 import { StyleSheet } from "react-native";
+import Util from "../../utils";
 
 export const styles = StyleSheet.create({
   container: {
-    borderWidth: 1,
+    borderWidth: Util.pixel,
     borderColor: "black",
     borderRadius: 5,
     padding: 6,

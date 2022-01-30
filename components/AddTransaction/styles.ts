@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import Util from "../../utils";
 
 export const styles = StyleSheet.create({
   container: {
@@ -25,7 +26,7 @@ export const styles = StyleSheet.create({
     height: 40,
     marginBottom: 15,
     marginHorizontal: 10,
-    borderWidth: 1,
+    borderWidth: Util.pixel,
     padding: 10,
     width: 200,
     maxWidth: 200,
@@ -34,10 +35,20 @@ export const styles = StyleSheet.create({
     textAlign: "left",
     width: 200,
   },
-  buttons: {
+  buttonContainer: {
     width: 200,
     flexDirection: "row",
     justifyContent: "space-around",
     marginTop: 20,
+  },
+  buttons: {
+    borderBottomWidth: Util.pixel,
+  },
+  buttonText: {
+    fontSize: 20,
+  },
+  icon: {
+    position: "absolute",
+    left: Util.size.width / 2 - 30,
   },
 });

@@ -1,4 +1,5 @@
-import { Dimensions, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
+import Util from "../../utils";
 
 export const styles = StyleSheet.create({
   container: {
@@ -7,7 +8,7 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginVertical: 5,
-    borderBottomWidth: 1,
+    borderBottomWidth: Util.pixel,
     paddingVertical: 2,
   },
   text: {
