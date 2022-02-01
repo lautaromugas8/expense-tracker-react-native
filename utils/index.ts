@@ -1,4 +1,9 @@
 import { PixelRatio, Dimensions } from "react-native";
+import uuid from "react-native-uuid";
+
+function generateID() {
+  return uuid.v4().toString();
+}
 
 const Util = {
   ratio: PixelRatio.get(),
@@ -10,6 +15,7 @@ const Util = {
   colors: {
     yellow: "#ffee00",
   },
+  generateID,
 };
 
 export default Util;

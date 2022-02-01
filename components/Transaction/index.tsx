@@ -6,7 +6,7 @@ type Props = {
   text: string;
   description: string;
   amount: number;
-  id: number;
+  id: string;
 };
 
 export function Transaction({ text, description, amount, id }: Props) {

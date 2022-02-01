@@ -30,8 +30,11 @@ export function AddTransaction() {
     if (!text || !description || !amount) {
       return Alert.alert("You must complete all fields");
     }
+    if (Number(amount).toString() === "NaN") {
+      return Alert.alert("The amount must be a number");
+    }
     const newTransaction: TransactionType = {
-      id: Math.floor(Math.random() * 100),
+      id: Util.generateID(),
       text,
       description,
       amount: +amount,
