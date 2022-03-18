@@ -1,9 +1,9 @@
 import { View, Text } from "react-native";
-import { useTransactions } from "../../context/GlobalState";
+import { useAppSelector } from "../../app/hooks";
 import { styles } from "./styles";
 
 export function Balance() {
-  const { transactions } = useTransactions();
+  const { transactions } = useAppSelector((state) => state.transactions);
 
   const amounts = transactions.map((transaction) => transaction.amount);
 

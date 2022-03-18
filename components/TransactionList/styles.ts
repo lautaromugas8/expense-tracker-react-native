@@ -4,8 +4,8 @@ export const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 16,
     marginTop: 5,
-    height: 250,
-    maxHeight: 250,
+    height: 500,
+    maxHeight: 500,
   },
   titleContainer: {
     marginBottom: 5,

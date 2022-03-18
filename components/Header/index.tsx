@@ -1,11 +1,11 @@
 import { View } from "react-native";
 import { Balance } from "../Balance";
 import { SummaryCard } from "../SummaryCard";
-import { useTransactions } from "../../context/GlobalState";
+import { useAppSelector } from "../../app/hooks";
 import { styles } from "./styles";
 
 export function Header() {
-  const { transactions } = useTransactions();
+  const { transactions } = useAppSelector((state) => state.transactions);
 
   const amounts = transactions.map((transaction) => transaction.amount);
 

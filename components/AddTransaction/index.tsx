@@ -1,108 +1,177 @@
-import { useState } from "react";
 import {
   View,
   Text,
-  Modal,
-  Pressable,
   TextInput,
+  Pressable,
   Alert,
-  Platform,
+  Keyboard,
 } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
-import { TransactionType, useTransactions } from "../../context/GlobalState";
+import { useForm, Controller, SubmitHandler } from "react-hook-form";
+import { useTheme } from "@react-navigation/native";
+import { useAppDispatch } from "../../app/hooks";
+import { addTransaction } from "../../app/transactionSlice";
 import Util from "../../utils";
+import type { TransactionType } from "../../app/transactionSlice";
 import { styles } from "./styles";
 
-export function AddTransaction() {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [text, setText] = useState("");
-  const [description, setDescription] = useState("");
-  const [amount, setAmount] = useState("");
+type FormValues = {
+  text: string;
+  description: string;
+  amount: string;
+};
 
-  const { addTransaction } = useTransactions();
-  const resetFields = () => {
-    setText("");
-    setDescription("");
-    setAmount("");
-  };
+export default function AddTransaction() {
+  const { dark, colors } = useTheme();
+  const dispatch = useAppDispatch();
 
-  const onAdd = () => {
-    if (!text || !description || !amount) {
-      return Alert.alert("You must complete all fields");
-    }
-    if (Number(amount).toString() === "NaN") {
-      return Alert.alert("The amount must be a number");
-    }
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<FormValues>({
+    defaultValues: {
+      text: "",
+      description: "",
+      amount: "",
+    },
+  });
+
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
     const newTransaction: TransactionType = {
       id: Util.generateID(),
-      text,
-      description,
-      amount: +amount,
-      createdAt: new Date(),
+      text: data.text,
+      description: data.description,
+      amount: +data.amount,
+      // createdAt: new Date(),
     };
-    if (addTransaction) addTransaction(newTransaction);
-    resetFields();
-    setModalVisible(!modalVisible);
-  };
 
-  const onClose = () => {
-    resetFields();
-    setModalVisible(!modalVisible);
+    await dispatch(addTransaction(newTransaction));
+
+    Alert.alert("Success", "Transaction added.");
+
+    Keyboard.dismiss();
+    reset();
   };
 
   return (
     <View style={styles.container}>
-      <Modal animationType="fade" visible={modalVisible} transparent>
-        <View style={styles.container}>
-          <View style={styles.modalView}>
-            <Text style={{ fontSize: 21, marginBottom: 15 }}>
-              New Transaction
-            </Text>
-            <Text style={styles.inputTitle}>Title</Text>
-            <TextInput
-              value={text}
-              onChangeText={setText}
-              style={styles.input}
-            />
-            <Text style={styles.inputTitle}>Desciption</Text>
-            <TextInput
-              value={description}
-              onChangeText={setDescription}
-              style={styles.input}
-            />
-            <Text style={styles.inputTitle}>Amount</Text>
-            <TextInput
-              value={amount}
-              onChangeText={setAmount}
-              style={styles.input}
-              keyboardType={
-                Platform.OS === "android"
-                  ? "numeric"
-                  : "numbers-and-punctuation"
-              }
-              placeholder="Negative values for expenses"
-            />
-            <View style={styles.buttonContainer}>
-              <Pressable onPress={onAdd} style={styles.buttons}>
-                <Text style={styles.buttonText}>Add</Text>
-              </Pressable>
-              <Pressable onPress={onClose} style={styles.buttons}>
-                <Text style={styles.buttonText}>Close</Text>
-              </Pressable>
-            </View>
-          </View>
-        </View>
-      </Modal>
+      <Text style={{ color: colors.text }}>Title</Text>
+
+      <View
+        style={{ borderBottomWidth: 1, borderBottomColor: colors.text }}
+      ></View>
+
+      <Controller
+        control={control}
+        rules={{
+          required: true,
+        }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <TextInput
+            style={[
+              styles.input,
+              {
+                backgroundColor: dark ? "#292A2D" : undefined,
+                color: colors.text,
+              },
+            ]}
+            onChangeText={onChange}
+            onBlur={onBlur}
+            value={value}
+          />
+        )}
+        name="text"
+      />
+
+      {errors.text && (
+        <Text style={[styles.error, { color: dark ? "#CF6679" : "red" }]}>
+          This is required.
+        </Text>
+      )}
+
+      <Text style={{ color: colors.text }}>Description</Text>
+
+      <View
+        style={{ borderBottomWidth: 1, borderBottomColor: colors.text }}
+      ></View>
+
+      <Controller
+        control={control}
+        rules={{
+          required: true,
+        }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <TextInput
+            style={[
+              styles.input,
+              {
+                backgroundColor: dark ? "#292A2D" : undefined,
+                color: colors.text,
+              },
+            ]}
+            onChangeText={onChange}
+            onBlur={onBlur}
+            value={value}
+          />
+        )}
+        name="description"
+      />
+
+      {errors.description && (
+        <Text style={[styles.error, { color: dark ? "#CF6679" : "red" }]}>
+          This is required.
+        </Text>
+      )}
+
+      <Text style={{ color: colors.text }}>Amount</Text>
+
+      <View
+        style={{ borderBottomWidth: 1, borderBottomColor: colors.text }}
+      ></View>
+
+      <Controller
+        control={control}
+        rules={{
+          required: true,
+          pattern: /^[-+]?\d+(\.\d+)?$/,
+        }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <TextInput
+            style={[
+              styles.input,
+              {
+                backgroundColor: dark ? "#292A2D" : undefined,
+                color: colors.text,
+              },
+            ]}
+            onChangeText={onChange}
+            onBlur={onBlur}
+            value={value}
+            keyboardType="number-pad"
+          />
+        )}
+        name="amount"
+      />
+
+      {errors.amount?.type === "required" && (
+        <Text style={[styles.error, { color: dark ? "#CF6679" : "red" }]}>
+          This is required.
+        </Text>
+      )}
+
+      {errors.amount?.type === "pattern" && (
+        <Text style={[styles.error, { color: dark ? "#CF6679" : "red" }]}>
+          Not a number.
+        </Text>
+      )}
+
       <Pressable
-        onPress={() => setModalVisible(!modalVisible)}
-        disabled={modalVisible}
-        style={styles.icon}
+        style={[styles.button, { backgroundColor: colors.primary }]}
+        android_ripple={{ radius: 90 }}
+        onPress={handleSubmit(onSubmit)}
       >
-        <AntDesign
-          name="pluscircle"
-          size={60}
-          color={modalVisible ? "gray" : Util.colors.yellow}
-        />
+        <Text style={[styles.buttonText, { color: colors.text }]}>SUBMIT</Text>
       </Pressable>
     </View>
   );

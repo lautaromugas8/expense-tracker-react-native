@@ -1,5 +1,6 @@
 import { View, Text, Pressable, Alert } from "react-native";
-import { useTransactions } from "../../context/GlobalState";
+import { useAppDispatch } from "../../app/hooks";
+import { deleteTransaction } from "../../app/transactionSlice";
 import { styles } from "./styles";
 
 type Props = {
@@ -10,7 +11,7 @@ type Props = {
 };
 
 export function Transaction({ text, description, amount, id }: Props) {
-  const { deleteTransaction } = useTransactions();
+  const dispatch = useAppDispatch();
 
   return (
     <Pressable
@@ -18,8 +19,8 @@ export function Transaction({ text, description, amount, id }: Props) {
         Alert.alert("Delete this transaction?", undefined, [
           {
             text: "Yes",
-            onPress: () => {
-              if (deleteTransaction) deleteTransaction(id);
+            onPress: async () => {
+              await dispatch(deleteTransaction(id));
             },
           },
           { text: "No", style: "cancel" },
